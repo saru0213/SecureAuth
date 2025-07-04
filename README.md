@@ -3,11 +3,12 @@
 SecureAuth is a modern, responsive full-stack web application providing enterprise-grade authentication and security solutions. Built with React and Next.js, styled with Tailwind CSS, it features a clean UI, responsive design, and robust user authentication with secure credential management.
 
 ---
+
 ## 🌐 Live Demo
 
 🚀 Check out the live deployed project:
 
-🔗 [https://secureauth.vercel.app](https://secureauth.vercel.app)
+🔗 [https://secure-authpass.vercel.app](https://secure-authpass.vercel.app)
 
 
 ## Live Features
@@ -81,6 +82,8 @@ Before you begin, ensure you have the following installed and set up:
   - Go to [Google Cloud Console](https://console.cloud.google.com/).  
   - Create OAuth 2.0 credentials (Client ID and Secret) and add your authorized redirect URI, e.g., `http://localhost:3000/api/auth/callback/google`.
 
+  ---
+
 ## 🚀 Deployment
 
 ### **Vercel (Recommended)**
@@ -92,7 +95,6 @@ Deploying on [Vercel](https://vercel.com/) is seamless for Next.js applications:
 3. **Add environment variables** in the Vercel dashboard under **Project Settings → Environment Variables**.
 4. **Deploy automatically** on each push to your GitHub repository.
 
----
 
 ### **Other Platforms**
 
