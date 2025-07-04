@@ -16,7 +16,13 @@ import Cookies from "js-cookie";
 const validationSchema = Yup.object().shape({
   username: Yup.string()
     .min(3, "Username must be at least 3 characters")
+    .max(20, "Username cannot exceed 20 characters")
+    .matches(
+      /^[a-zA-Z][a-zA-Z0-9_.]*$/,
+      "Username must start with a letter and can contain letters, numbers, underscores, and dots"
+    )
     .required("Username is required"),
+
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),

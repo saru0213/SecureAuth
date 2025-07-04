@@ -1,10 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
-      domains: ['lh3.googleusercontent.com'],
-       domains: ["ui-avatars.com"],
-      //  domains: ["api.dicebear.com"], // Add allowed external image domains here
-    },
-  };
-  
-  export default nextConfig;
+  images: {
+    domains: ['lh3.googleusercontent.com', 'ui-avatars.com'],
+    // Add other allowed domains here if needed
+  },
+};
+
+export default nextConfig;

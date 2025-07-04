@@ -11,6 +11,7 @@ export default function Dashboard() {
   const [userData, setUserData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -23,6 +24,7 @@ export default function Dashboard() {
 
     const fetchUser = async () => {
       try {
+        setLoading(true);
         const docRef = doc(db, "users", session.user.id);
         const docSnap = await getDoc(docRef);
 
@@ -34,6 +36,8 @@ export default function Dashboard() {
         }
       } catch (error) {
         console.error("Error fetching user:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -46,91 +50,89 @@ export default function Dashboard() {
 
   const handleSave = async () => {
     try {
+      setLoading(true);
       const docRef = doc(db, "users", session.user.id);
       await updateDoc(docRef, editData);
       setUserData(editData); // Update local userData with new data
       setIsEditing(false); // Exit edit mode
     } catch (error) {
       console.error("Error updating profile:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (status === "loading") return <p>Loading session...</p>;
+  if (status === "loading" || loading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="w-12 h-12 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+      </div>
+    );
 
   return (
-    <div className="max-w-md mx-auto mt-10 bg-white p-6 rounded-lg shadow">
-      <h1 className="text-2xl font-bold mb-4">👤 Profile</h1>
+    <div className="max-w-2xl mx-auto mt-10 bg-white p-6 rounded-lg shadow-lg">
+      <h1 className="text-3xl font-bold mb-6 text-center">👤 Profile</h1>
+      <h1 className="text-sm mb-4  text-center text-gray-900">
+        👋 Welcome{userData?.FullName ? `, ${userData.FullName}` : ""}
+      </h1>
 
       {userData ? (
         <>
           {isEditing ? (
-            <>
-              <div className="space-y-3">
-                <div>
-                  <label className="block text-sm font-medium">Name</label>
+            <div className="space-y-4">
+              {[
+                { label: "Username", name: "username", type: "text" },
+                { label: "Full Name", name: "FullName", type: "text" },
+                { label: "Email", name: "email", type: "email" },
+                { label: "Age", name: "age", type: "number" },
+                { label: "Phone", name: "phone", type: "text" },
+                { label: "Branch", name: "branch", type: "text" },
+                { label: "Year", name: "year", type: "text" },
+                { label: "Roll Number", name: "rollNumber", type: "text" },
+                { label: "College", name: "college", type: "text" },
+                { label: "University", name: "university", type: "text" },
+                { label: "CGPA", name: "cgpa", type: "number", step: "0.01" },
+              ].map((field) => (
+                <div key={field.name}>
+                  <label className="block text-sm font-medium">
+                    {field.label}
+                  </label>
                   <input
-                    type="text"
-                    name="username"
-                    value={editData.username || ""}
+                    type={field.type}
+                    name={field.name}
+                    value={editData[field.name] || ""}
                     onChange={handleChange}
                     className="w-full border px-3 py-2 rounded"
+                    step={field.step || undefined}
                   />
                 </div>
+              ))}
 
-                <div>
-                  <label className="block text-sm font-medium">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={editData.email || ""}
-                    onChange={handleChange}
-                    className="w-full border px-3 py-2 rounded"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium">Age</label>
-                  <input
-                    type="number"
-                    name="age"
-                    value={editData.age || ""}
-                    onChange={handleChange}
-                    className="w-full border px-3 py-2 rounded"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium">Phone</label>
-                  <input
-                    type="text"
-                    name="phone"
-                    value={editData.phone || ""}
-                    onChange={handleChange}
-                    className="w-full border px-3 py-2 rounded"
-                  />
-                </div>
+              <div className="flex flex-col md:flex-row md:space-x-4 mt-6">
+                <button
+                  onClick={handleSave}
+                  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mb-2 md:mb-0"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setIsEditing(false)}
+                  className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                >
+                  Cancel
+                </button>
               </div>
-
-              <button
-                onClick={handleSave}
-                className="mt-6 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-              >
-                Save
-              </button>
-              <button
-                onClick={() => setIsEditing(false)}
-                className="mt-2 ml-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-              >
-                Cancel
-              </button>
-            </>
+            </div>
           ) : (
-            <>
+            <div className="space-y-2">
               <p>
-                <strong>Name:</strong> {userData.username || userData.name}
+                <strong>Username:</strong> {userData.username || "N/A"}
               </p>
               <p>
-                <strong>Email:</strong> {userData.email}
+                <strong>Full Name:</strong> {userData.FullName || "N/A"}
+              </p>
+              <p>
+                <strong>Email:</strong> {userData.email || "N/A"}
               </p>
               <p>
                 <strong>Age:</strong> {userData.age || "N/A"}
@@ -138,21 +140,40 @@ export default function Dashboard() {
               <p>
                 <strong>Phone:</strong> {userData.phone || "N/A"}
               </p>
+              <p>
+                <strong>Branch:</strong> {userData.branch || "N/A"}
+              </p>
+              <p>
+                <strong>Year:</strong> {userData.year || "N/A"}
+              </p>
+              <p>
+                <strong>Roll Number:</strong> {userData.rollNumber || "N/A"}
+              </p>
+              <p>
+                <strong>College:</strong> {userData.college || "N/A"}
+              </p>
+              <p>
+                <strong>University:</strong> {userData.university || "N/A"}
+              </p>
+              <p>
+                <strong>CGPA:</strong> {userData.cgpa || "N/A"}
+              </p>
 
-              <button
-                onClick={() => setIsEditing(true)}
-                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              >
-                Edit Profile
-              </button>
-
-              <button
-                onClick={() => signOut({ callbackUrl: "/loginform" })}
-                className="mt-4 ml-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-              >
-                Logout
-              </button>
-            </>
+              <div className="flex flex-col md:flex-row md:space-x-4 mt-6">
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-2 md:mb-0"
+                >
+                  Edit Profile
+                </button>
+                <button
+                  onClick={() => signOut({ callbackUrl: "/loginform" })}
+                  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
           )}
         </>
       ) : (
