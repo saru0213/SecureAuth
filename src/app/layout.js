@@ -7,8 +7,8 @@ import Footer from "./Components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Secure Auth",
-description: "A Next.js project for secure user authentication with OTP and modern security features."
+  title: "SecureAuth — Enterprise-Grade Authentication & Security Web Application",
+description: "SecureAuth is a modern, full-stack web application built with Next.js and Tailwind CSS that offers robust, secure user authentication and management features. It supports username/email login, Google OAuth, OTP verification, password reset, and protected routes — all backed by Firebase Firestore and enhanced with JWT and bcrypt for maximum security."
 };
 
 export default function RootLayout({ children }) {

@@ -31,7 +31,7 @@ export const authOptions = {
           if (userQuery.empty) {
             userQuery = await db
               .collection("users")
-              .where("username", "==", input.toLowerCase())
+              .where("username", "==", input)
               .get();
 
             if (userQuery.empty) {
