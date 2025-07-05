@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SecureAuth Web Application
 
-## Getting Started
+SecureAuth is a modern, responsive full-stack web application providing enterprise-grade authentication and security solutions. Built with React and Next.js, styled with Tailwind CSS, it features a clean UI, responsive design, and robust user authentication with secure credential management.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🌐 Live Demo
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🚀 Check out the live deployed project:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+🔗 [https://secure-authpass.vercel.app](https://secure-authpass.vercel.app)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Live Features
 
-To learn more about Next.js, take a look at the following resources:
+### 🔐 Authentication
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Username / Email + Password Login:** Users can log in securely using their username or email with password authentication.
+- **Google OAuth Sign-In:** Quick and secure login with Google using NextAuth.js.
+- **JWT Tokens:** JSON Web Tokens are used to verify and protect user sessions on private routes.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### 🛡️ Security
 
-## Deploy on Vercel
+- **bcrypt Password Hashing:** All passwords are securely hashed with bcrypt before storing in the database.
+- **OTP Verification:** Signup process includes OTP verification sent via email to validate user accounts.
+- **Protected Routes:** Middleware ensures that only authenticated users can access private pages.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 💻 UI
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Responsive Design:** Fully responsive layout built with Tailwind CSS for seamless experience on all devices.
+- **Dark Mode Support:** Partial dark mode styling for comfortable viewing in all environments.
+
+### 🔗 Backend
+
+- **Firebase Firestore:** Used as the backend database to store user data securely.
+- **NextAuth.js Session Management:** Handles authentication, OAuth integrations, and user sessions efficiently.
+
+---
+
+## 🛠️ Tech Stack
+
+- React 18 / Next.js 13+
+- Tailwind CSS for styling
+- NextAuth.js for authentication and OAuth integration (Google Sign-In)
+- JSON Web Tokens (JWT) for session and route protection
+- bcrypt for secure password hashing
+- Firebase Firestore for backend database and user management
+- Lucide React icons for scalable SVG icons
+- JavaScript / JSX
+
+---
+
+## 🔄 Authentication Flow Highlights
+
+- **Signup:** Users create accounts by entering their credentials, and an OTP is sent to their email for verification before the account is activated.
+
+- **Login:** Supports login using either username/email with password (hashed via bcrypt) or through Google OAuth using NextAuth.js for seamless authentication.
+
+- **Protected Routes:** Middleware integrated with JWT token verification ensures only authenticated users can access certain pages and APIs.
+
+- **Password Reset:** Users can request password reset emails and securely change their passwords via OTP or token-based reset flows.
+
+- **Session Management:** NextAuth manages user sessions, JWT tokens, and integrates smoothly with the Firebase backend for authentication and authorization.
+
+---
+
+## 📋 Prerequisites
+
+Before you begin, ensure you have the following installed and set up:
+
+- **Node.js** (v16 or later recommended) ⚙️  
+  [Download Node.js](https://nodejs.org/)
+
+- **npm or yarn** package manager 📦  
+  npm is included with Node.js, or install [Yarn](https://yarnpkg.com/) if preferred.
+
+- **Firebase Project with Firestore Enabled** 🔥  
+  - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/).  
+  - Enable **Firestore Database** in the Firebase console.
+
+- **Google OAuth Credentials for NextAuth Setup** 🔑  
+  - Go to [Google Cloud Console](https://console.cloud.google.com/).  
+  - Create OAuth 2.0 credentials (Client ID and Secret) and add your authorized redirect URI, e.g., `http://localhost:3000/api/auth/callback/google`.
+
+  ---
+
+## 🚀 Deployment
+
+### **Vercel (Recommended)**
+
+Deploying on [Vercel](https://vercel.com/) is seamless for Next.js applications:
+
+1. **Push your code** to GitHub.
+2. **Connect your repository** to Vercel.
+3. **Add environment variables** in the Vercel dashboard under **Project Settings → Environment Variables**.
+4. **Deploy automatically** on each push to your GitHub repository.
+
+
+### **Other Platforms**
+
+- **Netlify:** 🌐 Deploy via Git integration. [Netlify Docs](https://docs.netlify.com/)
+- **Heroku:** ☁️ Use Node.js buildpacks for deployment. [Heroku Docs](https://devcenter.heroku.com/categories/nodejs-support)
+- **AWS:** 🖥️ Deploy using [AWS Amplify](https://aws.amazon.com/amplify/) for full-stack apps or [EC2](https://aws.amazon.com/ec2/) for server setup.
+
+---
+
+## 🔒 Built Securely
+
+Built securely with ❤️ by [**Saraswati Adkine**](https://github.com/saru0213)
+
+🛡️ Empowering digital security with **SecureAuth**
+
+---
